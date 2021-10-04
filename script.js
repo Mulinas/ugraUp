@@ -1,3 +1,66 @@
+class Menu{
+    static stop = true;
+    constructor(){
+        this.width = 300;
+        this.height = 200;
+        let menu = document.createElement('div');
+
+        menu.style.width = this.width + 'px';
+        menu.style.height = this.height + 'px';
+        menu.style.backgroundColor = 'black';
+        menu.style.display = 'flex';
+        menu.style.justifyContent = 'center';
+        menu.style.alignItems = 'center';
+        menu.style.flexDirection = 'column';
+        menu.id = 'menu';
+        
+        document.querySelector('div#pole').append(menu);
+        new StartBut();
+        // new ExitBut();
+
+    }
+}
+
+class Buttons{
+    constructor(text, Id){
+        this.text = text;
+        this.Id = Id;
+        this.width = 100;
+        this.height = 30;
+
+        let but = document.createElement('button');
+        but.style.backgroundColor = 'red';
+        but.style.width = this.width + 'px';
+        but.style.height = this.height + 'px';
+        but.style.marginBottom = '10px';
+        but.style.marginTop = '10px';
+        but.id = this.Id;
+        but.innerText = this.text;
+        document.querySelector('div#menu').append(but);
+
+    }
+}
+
+class StartBut extends Buttons{
+    constructor(){
+        super('Старт', 'start');
+        let menu = document.getElementById('menu');
+        let st = document.getElementById('start'); 
+        st.onclick = function(){menu.style.display = 'none'; Menu.stop = false;} 
+
+    }
+}
+
+// class ExitBut extends Buttons{
+//     constructor(){
+//         super('Выход', 'exit');
+//         let str = document.getElementById('div#pole');
+//         let ex = document.getElementById('exit');
+//         ex.onclick = function(){str.style.display = 'none'; Menu.stop = true;} 
+
+//     }
+// }
+
 class Game{
     static enemyes = [];
     static Grav = 3;
@@ -11,25 +74,30 @@ class Game{
         p.style.width = this.width + 'px';
         p.style.height = this.height + 'px';
         p.style.backgroundColor = 'gray';
+        p.style.display = 'flex';
+        p.style.justifyContent = 'center';
+        p.style.alignItems = 'center';
         p.id = 'pole';
         document.querySelector(cont).append(p);
     }
 
 
     start(){
+        new Menu();
         this.nId = 1;
         this.hero = new Hero('div#pole');
         this.newEnemy = 0;
         this.int = setInterval(() => {
-            this.newEnemy++;
-            if (this.newEnemy>65){this.createEnemyes(); this.newEnemy = 0;}
-            this.loop(); 
+            if (Menu.stop == false) {
+                this.newEnemy++;
+                    if (this.newEnemy>65){this.createEnemyes(); this.newEnemy = 0;}
+                this.loop(); 
+            }
         }, 30);
 
     }
 
     createEnemyes(){
-        // while (condition) {
            Game.enemyes.push(new Enemy('div#pole', this.nId));
             this.nId++; 
         
