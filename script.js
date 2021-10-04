@@ -15,7 +15,7 @@ class Menu{
         menu.id = 'menu';
         
         document.querySelector('div#pole').append(menu);
-        new StartBut();
+        document.querySelector('div#menu').append(new StartBut());
         // new ExitBut();
 
     }
@@ -36,7 +36,6 @@ class Buttons{
         but.style.marginTop = '10px';
         but.id = this.Id;
         but.innerText = this.text;
-        document.querySelector('div#menu').append(but);
 
     }
 }
@@ -60,6 +59,15 @@ class StartBut extends Buttons{
 
 //     }
 // }
+
+class ReplayBut extends Buttons{
+    constructor(){
+        super('Начать с начала', 'replay');
+        let rep =  document.getElementById('menu');
+        let rep = document.getElementById('start'); 
+        rep.onclick = function(){menu.style.display = 'none'; Menu.stop = false;}
+    }
+}
 
 class Game{
     static enemyes = [];
