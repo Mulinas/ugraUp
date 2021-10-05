@@ -63,7 +63,7 @@ class StartBut extends Buttons{
 class ReplayBut extends Buttons{
     constructor(){
         super('Начать с начала', 'replay');
-        let rep =  document.getElementById('menu');
+        let rep =  document.getElementById('replay');
         let rep = document.getElementById('start'); 
         rep.onclick = function(){menu.style.display = 'none'; Menu.stop = false;}
     }
