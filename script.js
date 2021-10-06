@@ -15,14 +15,34 @@ class Menu{
         menu.id = 'menu';
         
         document.querySelector('div#pole').append(menu);
-        document.querySelector('div#menu').append(new StartBut());
+        new StartBut();
         // new ExitBut();
 
     }
 }
 
+class Replay{
+    constructor(){
+        this.width = 300;
+        this.height = 200;
+        let repl = document.createElement('div');
+
+        repl.style.width = this.width + 'px';
+        repl.style.height = this.height + 'px';
+        repl.style.backgroundColor = 'black';
+        repl.style.display = 'flex';
+        repl.style.justifyContent = 'center';
+        repl.style.alignItems = 'center';
+        repl.style.flexDirection = 'column';
+        repl.id = 'replay';
+
+        document.querySelector('div#pole').append(repl);
+        new ReplayBut();
+    }
+}
+
 class Buttons{
-    constructor(text, Id){
+    constructor(text, Id, cont){
         this.text = text;
         this.Id = Id;
         this.width = 100;
@@ -36,13 +56,14 @@ class Buttons{
         but.style.marginTop = '10px';
         but.id = this.Id;
         but.innerText = this.text;
+        document.querySelector(cont).append(but);
 
     }
 }
 
 class StartBut extends Buttons{
     constructor(){
-        super('Старт', 'start');
+        super('Старт', 'start', '#menu');
         let menu = document.getElementById('menu');
         let st = document.getElementById('start'); 
         st.onclick = function(){menu.style.display = 'none'; Menu.stop = false;} 
@@ -62,10 +83,9 @@ class StartBut extends Buttons{
 
 class ReplayBut extends Buttons{
     constructor(){
-        super('Начать с начала', 'replay');
-        let rep =  document.getElementById('replay');
-        let rep = document.getElementById('start'); 
-        rep.onclick = function(){menu.style.display = 'none'; Menu.stop = false;}
+        super('Начать с начала', 'repl', '#replay');
+        let rep =  document.getElementById('repl');
+        rep.onclick = function(){ Menu.stop = false;}
     }
 }
 
@@ -114,10 +134,11 @@ class Game{
     gameover(){
         let XColl = false;
         let YColl = false;
+        let c = 0;
         Game.enemyes.forEach(e => {
             if ((this.hero.x + this.hero.w >= e.x) && (this.hero.x <= e.x + e.w)) XColl = true;
             if ((this.hero.y + this.hero.h >= e.y) && (this.hero.y <= e.y + e.h)) YColl = true;
-            if (XColl&YColl) clearInterval(this.int);
+            if ((XColl&YColl)&&(c==0)) {clearInterval(this.int); new Replay(); c = 1;}
         });
     }
 
